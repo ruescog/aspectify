@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "aspectify"
+  site-url: "https://ruescog.github.io/aspectify"
+  description: ""Apply Aspect Oriented Programming to your Python code""
+  repo-branch: main
+  repo-url: "https://github.com/ruescog/aspectify"
