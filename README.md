@@ -9,8 +9,9 @@ the logging or a database connection.
 
 As it may be known, other programming languages has some functionallity
 (implemented or plugged in) to use this paradigm as an additional
-abstract layer to the core application. AspectJ (used in Java), can
-sound familiar to the reader.
+abstract layer to the core application.
+[AspectJ](https://www.eclipse.org/aspectj/) (used in Java), can sound
+familiar to the reader.
 
 In order to bring this amazing and powerful functionality to Python
 (which, in addition, will allow us to add it dynamically instead of
@@ -25,12 +26,17 @@ used in AOP. Those are: -
 (*what*): a cross-cutting concept. In fact, an
 [`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect) will
 group some functionalies. These, which will modify the natural behaviour
-of a method, are called `Advice`s. - `PointCut` (*when*): the time at
-which the new behaviuor must occur. Originally, only three points in
-time were defined (`before`, `around` and `after`), but nowadays new
-points in time are defined, such as “after throwing an exception”. -
-`Advice` (*what to do*): as mentioned above, the code fragment to
-execute when the `PointCut` occurs.
+of a method, are called `Advice`s. - `PointCut` (*when*): a fragment of
+code where the
+[`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect) is
+defined. Can be multiple `PointCut`s for each
+[`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect) (indeed,
+it will). - `Advice` (*when and what to do*): The code fragment to
+execute when the `PointCut` occurs and the moment when the new behaviuor
+must occur. Originally, only three moments were defined (`before`,
+`around` –instead of– and `after`), but nowadays new moments are
+defined, such as “after throwing an exception” (`after_throwing`) or
+“after NOT throwing an exception” (`after_returning`).
 
 ## Installation
 
@@ -46,110 +52,38 @@ pip install aspectify
 
 ## How to use Aspectify
 
-Once the background is defined and the library installed, we can start
-to create the AOP layer to our projects.
+Once the background is defined and the library is installed, we can
+start to create the AOP layer to our projects.
 
 ### The core project
 
-In order to use the library, we need a project. For example, here is a
-`Calculator` program, that will apply the basic operators to two values
-entered by keyboard.
+In order to use the library, we need a project. For example, we will use
+the `random` library for Python.
 
 ``` python
-class Calculator():
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
-    
-    def add(self):
-        return self.a + self.b
-
-    def subtract(self):
-        return self.a - self.b
-
-    def multiply(self):
-        return self.a * self.b
-
-    def divide(self):
-        return self.a / self.b
+from random import Random
 ```
 
-Now, we can use it to operate some integers.
+Now, we can use it to generate some integers.
 
 ``` python
-a = 10
-b = 20
-operator = "+"
-calculator = Calculator(a, b)
-
-if operator == "+":
-    print(calculator.add())
-elif operator == "-":
-    print(calculator.subtract())
-elif operator == "*":
-    print(calculator.multiply())
-elif operator == "/":
-    print(calculator.divide())
+r = Random()
+r.randint(5, 10)
 ```
 
-    30
+    9
 
-A bit rudimentary, but it works.
+As you can see in its documentation, `randint` (called with parameters
+`a` and `b`) can generate the `b` value itself (it is a closed range
+\[5, 10\]).
 
-Now, let us suppose that this `Calculator` program is a library. In
-addition, let us suppose that we did not write it, and we did not have
-the access to they parts: we just know that a `Calculator` class exists
-and it has four methods: `add`, `subtract`, `multiply` and `divide`.
+If we want to change this behaviour to the normal random functions
+behaviour (the range is closed-opened \[5, 10)), you will need to
+redefine it. Furthermore, if other functions or library use this method,
+they will not use yours.
 
-### AOP: definition
+How can we solve it? Using AOP.
 
-At this moment, we want to modify, let us say, the `add` method
-behaviour to add the following message: “Adding some numbers”. We can
-use the library to create an
-[`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect).
-
-> ADVICE: Trying to be as clean as possible, we strongly recomend you to
-> create a **new** `.py` file and add the
-> [`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect)s to
-> this file.
-
-First of all, we need to import to the
-[`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect)s file
-(`aspects.py` from now on) the libraries and modules that will be used.
-In this case, the `Calculator`.
-
-``` python
-# aspects.py file
-
-# import Calculator
-from aspectify.aop import Aspect, is_detectable
-```
-
-First of all, we need to define a method to gather all the classes
-loaded in the `aspects.py` file, in order to modify their behaviour
-dynamically. This method will be always be the same:
-
-``` python
-def get_classes():
-    return [element for element in list(globals().items())]
-```
-
-At this point, we can define our first
-[`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect). We will
-call it “add-message”, and it will show a message `before` the addition
-is done.
-
-``` python
-add_message_aspect = Aspect("add-message")
-add_message_aspect.set_before(lambda: print("Adding some numbers"))
-```
-
-Finally, we will create a `PointCut` that will define which methods will
-show this message. We will use the regular expression `.*add`.
-
-``` python
-add_message_aspect.create_pointcut(get_classes(), ".*add")
-```
-
-    Captured method: __main__.Calculator.add
-    [WARNING]: If executed in a notebook, the cell is shown being executed, but this message proves that the execution is finished.
+During this introduction, we have seen the background concepts and how
+to install the `Aspectify` library. In the next section we will explain
+how to use it with a simple example.

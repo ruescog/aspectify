@@ -6,37 +6,31 @@ __all__ = ['is_detectable', 'advice', 'Aspect']
 # %% ../nbs/00_aop.ipynb 3
 import re
 
+from functools import wraps
+
 # %% ../nbs/00_aop.ipynb 4
-def is_detectable(name, obj):
+def is_detectable(name, # The name of the object.
+                  obj # The builded object (potentially class).
+                 ):
     """
     Determines when an object is potentially detectable to add an aspect to it.
-
-    Params:
-    name: str ; The name of the object.
-    obj: object ; The builded object --generaly a class--.
-
-    Returns:
-    b: boolean ; Whether the `obj` object (so called `name`) is detectable via AOP or not.
     """
-    return (name not in ["get_ipython", "exit", "quit", "open"]
-            and not isinstance(obj, Aspect)
-            and isinstance(obj, type) # it must be a type (a class)
-            and callable(obj)
+    return (
+        name not in ["get_ipython", "exit", "quit", "open"]
+        and not isinstance(obj, Aspect)
+        and isinstance(obj, type) # it must be a type (a class)
+        and callable(obj)
             )
 
 # %% ../nbs/00_aop.ipynb 5
-def advice(moment, todo):
+def advice(moment, # One of 'before', 'around', 'after_returning', 'after_throwing' or 'after'. See the documentation for more information.
+           todo # What to do at the selected moment.
+          ):
     """
     Add an advice to a particular function.
-
-    Params:
-    moment: str ; One of 'before', 'around', 'after_returning', 'after_throwing' or 'after'. See the documentation for more information.
-    todo: funtion ; What to do at the selected moment.
-
-    Returns:
-    dec: function ; The modified function.
     """
     def dec(method):
+        @wraps(method)
         def inner(*args, **kwargs):
             todo_args = args[1:] # discards the 0-index argument, which is the object itself
             if moment not in ["before", "around", "after_returning", "after_throwing", "after"]:
@@ -60,17 +54,10 @@ class Aspect():
     """
     Defines a complete aspect.
     """
-    def __init__(self, name):
+    def __init__(self):
         """
-        Constructs a new aspect.
-
-        Params:
-        name: str ; The aspect name.
-
-        Returns:
-        None
+        Defines a new aspect.
         """
-        self.name = name
         self.before = None
         self.around = None
         self.after_returning = None
@@ -78,17 +65,13 @@ class Aspect():
         self.after = None
 
     # POINTCUT
-    def create_pointcut(self, objects, pattern, logging = True):
+    def create_pointcut(self,
+                        objects, # All the classes to which the aspect can be added. See the documentation for more information.
+                        pattern, # The pattern (string that defines a regular expression) used to select the methods to be added the aspect.
+                        logging = True # Whether to log the captured methods with the `PointCut`.
+                       ):
         """
         Creates a new pointcut associated with the aspect.
-
-        Params:
-        classes: list ; All the classes to which the aspect can be added. See the documentation for more information.
-        pattern: str ; The pattern (string that defines a regular expression) used to select the methods to be added the aspect.
-        logging: bool = True ; Whether to log the captured methods with the `PointCut`.
-
-        Returns:
-        None
         """
         pattern = re.compile(pattern)
 
@@ -121,64 +104,44 @@ class Aspect():
                         if logging: print(message)
 
     # ADVICES
-    def set_before(self, function):
+    def set_before(self,
+                   function # The 'to do' function in that moment.
+                  ):
         """
         Determines what to do before the execution of the method.
-
-        Params:
-        function: function ; The 'to do' function in that moment.
-
-        Returns:
-        None
         """
         self.before = function
     
-    def set_around(self, function):
+    def set_around(self,
+                   function # The 'to do' function in that moment.
+                  ):
         """
         Determines what to do instead of the execution of the method.
-
-        Params:
-        function: function ; The 'to do' function in that moment.
-
-        Returns:
-        None
         """
         self.around = function
     
-    def set_after_returning(self, function):
+    def set_after_returning(self,
+                            function # The 'to do' function in that moment.
+                           ):
         """
         Determines what to do after a complete execution of the method (when there are not exceptions).
-
-        Params:
-        function: function ; The 'to do' function in that moment.
-
-        Returns:
-        None
         """
         self.after_returning = function
     
-    def set_after_throwing(self, function):
+    def set_after_throwing(self,
+                           function # The 'to do' function in that moment.
+                          ):
         """
         Determines what to do when the execution of the method raises an exception.
         
         * BEWARE! This method will not handle the exception (it will be finally raised), but it will allow you to do something when the exception is raised.
-
-        Params:
-        function: function ; The 'to do' function in that moment.
-
-        Returns:
-        None
         """
         self.after_throwing = function
 
-    def set_after(self, function):
+    def set_after(self,
+                  function # The 'to do' function in that moment.
+                 ):
         """
         Determines what to do after the execution of the method. This function will be always executed after the `after_returning` and `after_throwing` functions.
-        
-        Params:
-        function: function ; The 'to do' function in that moment.
-
-        Returns:
-        None
         """
         self.after = function
