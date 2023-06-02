@@ -3,4 +3,8 @@ website:
     contents:
       - index.ipynb
       - 00_aop.ipynb
-      - index_0.ipynb
+      - 01_example.ipynb
+      - 02_example.ipynb
+      - nbdev.yml
+      - sidebar.yml
+      - styles.css
