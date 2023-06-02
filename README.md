@@ -131,7 +131,7 @@ dynamically. This method will be always be the same:
 
 ``` python
 def get_classes():
-    return [element for element in list(globals().items()) if is_detectable(*element)]
+    return [element for element in list(globals().items())]
 ```
 
 At this point, we can define our first
@@ -151,4 +151,5 @@ show this message. We will use the regular expression `.*add`.
 add_message_aspect.create_pointcut(get_classes(), ".*add")
 ```
 
-    AttributeError: 'ZMQExitAutocall' object has no attribute '__name__'
+    Captured method: __main__.Calculator.add
+    [WARNING]: If executed in a notebook, the cell is shown being executed, but this message proves that the execution is finished.
