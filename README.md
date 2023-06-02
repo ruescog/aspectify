@@ -50,7 +50,7 @@ pip install aspectify
 > **ADVICE**: You should use a virtual environment to install the
 > packages associated with your proyect.
 
-## How to use Aspectify
+## Why do we need Aspectify
 
 Once the background is defined and the library is installed, we can
 start to create the AOP layer to our projects.
