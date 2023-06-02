@@ -1,0 +1,7 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_aop.ipynb
+      - 01_example.ipynb
+      - 02_example.ipynb
