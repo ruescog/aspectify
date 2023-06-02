@@ -49,7 +49,7 @@ def advice(moment, todo):
                 return result
 
             except Exception as e:
-                if moment in ["after_throwing", "after"]: todo([e, *todo_args], **kwargs)
+                if moment in ["after_throwing", "after"]: todo(e, *todo_args, **kwargs)
                 raise e
 
         return inner
