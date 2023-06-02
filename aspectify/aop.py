@@ -119,8 +119,6 @@ class Aspect():
                             if logging: message += "; CANNOT be modified."
                         
                         if logging: print(message)
-        
-        print("[WARNING]: If executed in a notebook, the cell is shown being executed, but this message proves that the execution is finished.")
 
     # ADVICES
     def set_before(self, function):
