@@ -3,3 +3,5 @@ website:
     contents:
       - index.ipynb
       - 00_aop.ipynb
+      - 01_example01.ipynb
+      - 02_example02.ipynb

@@ -15,4 +15,5 @@ d = { 'settings': { 'branch': 'main',
                                'aspectify.aop.Aspect.set_before': ('aop.html#aspect.set_before', 'aspectify/aop.py'),
                                'aspectify.aop.advice': ('aop.html#advice', 'aspectify/aop.py'),
                                'aspectify.aop.is_detectable': ('aop.html#is_detectable', 'aspectify/aop.py')},
-            'aspectify.core': {'aspectify.core.foo': ('core.html#foo', 'aspectify/core.py')}}}
+            'aspectify.examples': {},
+            'aspectify.examples2': {}}}

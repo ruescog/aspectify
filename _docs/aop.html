@@ -109,6 +109,16 @@ ul.task-list li input[type="checkbox"] {
   <a href="./aop.html" class="sidebar-item-text sidebar-link active">aop</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./example01.html" class="sidebar-item-text sidebar-link">First example. Logging.</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./example02.html" class="sidebar-item-text sidebar-link">Second example. Regular expressions.</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -121,6 +131,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#is_detectable" id="toc-is_detectable" class="nav-link active" data-scroll-target="#is_detectable">is_detectable</a></li>
   <li><a href="#advice" id="toc-advice" class="nav-link" data-scroll-target="#advice">advice</a></li>
   <li><a href="#aspect" id="toc-aspect" class="nav-link" data-scroll-target="#aspect">Aspect</a></li>
+  <li><a href="#aspect.create_pointcut" id="toc-aspect.create_pointcut" class="nav-link" data-scroll-target="#aspect.create_pointcut">Aspect.create_pointcut</a></li>
+  <li><a href="#aspect.set_before" id="toc-aspect.set_before" class="nav-link" data-scroll-target="#aspect.set_before">Aspect.set_before</a></li>
+  <li><a href="#aspect.set_around" id="toc-aspect.set_around" class="nav-link" data-scroll-target="#aspect.set_around">Aspect.set_around</a></li>
+  <li><a href="#aspect.set_after_returning" id="toc-aspect.set_after_returning" class="nav-link" data-scroll-target="#aspect.set_after_returning">Aspect.set_after_returning</a></li>
+  <li><a href="#aspect.set_after_throwing" id="toc-aspect.set_after_throwing" class="nav-link" data-scroll-target="#aspect.set_after_throwing">Aspect.set_after_throwing</a></li>
+  <li><a href="#aspect.set_after" id="toc-aspect.set_after" class="nav-link" data-scroll-target="#aspect.set_after">Aspect.set_after</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ruescog/aspectify/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -216,6 +232,169 @@ ul.task-list li input[type="checkbox"] {
 <pre><code> Aspect ()</code></pre>
 </blockquote>
 <p>Defines a complete aspect.</p>
+<hr>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L68" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="aspect.create_pointcut" class="level3">
+<h3 class="anchored" data-anchor-id="aspect.create_pointcut">Aspect.create_pointcut</h3>
+<blockquote class="blockquote">
+<pre><code> Aspect.create_pointcut (objects, pattern, logging=True)</code></pre>
+</blockquote>
+<p>Creates a new pointcut associated with the aspect.</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>objects</td>
+<td></td>
+<td></td>
+<td>All the classes to which the aspect can be added. See the documentation for more information.</td>
+</tr>
+<tr class="even">
+<td>pattern</td>
+<td></td>
+<td></td>
+<td>The pattern (string that defines a regular expression) used to select the methods to be added the aspect.</td>
+</tr>
+<tr class="odd">
+<td>logging</td>
+<td>bool</td>
+<td>True</td>
+<td>Whether to log the captured methods with the <code>PointCut</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L107" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="aspect.set_before" class="level3">
+<h3 class="anchored" data-anchor-id="aspect.set_before">Aspect.set_before</h3>
+<blockquote class="blockquote">
+<pre><code> Aspect.set_before (function)</code></pre>
+</blockquote>
+<p>Determines what to do before the execution of the method.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>function</td>
+<td>The ‘to do’ function in that moment.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L115" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="aspect.set_around" class="level3">
+<h3 class="anchored" data-anchor-id="aspect.set_around">Aspect.set_around</h3>
+<blockquote class="blockquote">
+<pre><code> Aspect.set_around (function)</code></pre>
+</blockquote>
+<p>Determines what to do instead of the execution of the method.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>function</td>
+<td>The ‘to do’ function in that moment.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L123" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="aspect.set_after_returning" class="level3">
+<h3 class="anchored" data-anchor-id="aspect.set_after_returning">Aspect.set_after_returning</h3>
+<blockquote class="blockquote">
+<pre><code> Aspect.set_after_returning (function)</code></pre>
+</blockquote>
+<p>Determines what to do after a complete execution of the method (when there are not exceptions).</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>function</td>
+<td>The ‘to do’ function in that moment.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L131" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="aspect.set_after_throwing" class="level3">
+<h3 class="anchored" data-anchor-id="aspect.set_after_throwing">Aspect.set_after_throwing</h3>
+<blockquote class="blockquote">
+<pre><code> Aspect.set_after_throwing (function)</code></pre>
+</blockquote>
+<p>Determines what to do when the execution of the method raises an exception.</p>
+<ul>
+<li>BEWARE! This method will not handle the exception (it will be finally raised), but it will allow you to do something when the exception is raised.</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>function</td>
+<td>The ‘to do’ function in that moment.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L141" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="aspect.set_after" class="level3">
+<h3 class="anchored" data-anchor-id="aspect.set_after">Aspect.set_after</h3>
+<blockquote class="blockquote">
+<pre><code> Aspect.set_after (function)</code></pre>
+</blockquote>
+<p>Determines what to do after the execution of the method. This function will be always executed after the <code>after_returning</code> and <code>after_throwing</code> functions.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>function</td>
+<td>The ‘to do’ function in that moment.</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

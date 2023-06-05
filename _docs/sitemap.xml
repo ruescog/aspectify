@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://ruescog.github.io/aspectify/example02.html</loc>
+    <lastmod>2023-06-05T07:31:04.401Z</lastmod>
+  </url>
+  <url>
     <loc>https://ruescog.github.io/aspectify/index.html</loc>
-    <lastmod>2023-06-05T07:00:16.729Z</lastmod>
+    <lastmod>2023-06-05T07:31:04.869Z</lastmod>
   </url>
   <url>
     <loc>https://ruescog.github.io/aspectify/aop.html</loc>
-    <lastmod>2023-06-05T07:00:16.997Z</lastmod>
+    <lastmod>2023-06-05T07:31:05.177Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruescog.github.io/aspectify/example01.html</loc>
+    <lastmod>2023-06-05T07:31:05.629Z</lastmod>
   </url>
 </urlset>

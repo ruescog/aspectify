@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "example02.html",
+    "href": "example02.html",
+    "title": "Second example. Regular expressions.",
+    "section": "",
+    "text": "During this example, we will show you why you should be stricty accurate using the create_pointcut method."
+  },
+  {
+    "objectID": "example02.html#library-import",
+    "href": "example02.html#library-import",
+    "title": "Second example. Regular expressions.",
+    "section": "Library import",
+    "text": "Library import\nFirst of all, we need to import to the Aspects file (aspects.py from now on) the libraries and modules that will be used. In this case, random.\nAdditionally, we need to define the get_classes method. This method is always needed in order to get all the available classes to add Advices.\n\ndef get_classes():\n    return [element for element in list(globals().items())]"
+  },
+  {
+    "objectID": "example02.html#aspect-definition",
+    "href": "example02.html#aspect-definition",
+    "title": "Second example. Regular expressions.",
+    "section": "Aspect definition",
+    "text": "Aspect definition\nIn this example, we will define an Aspect called bad_aspect, and it will send a message when the function is being called.\nTo do so, we add the before Advice defined below. Here you can use defined functions or lambda.\n\nbad_aspect = Aspect()\nbad_aspect.set_before(lambda *a, **k: print(\"catched!\"))\n\nNow, we create an Advice to define which methods will show this message. As we want to show you what happen when the regular expression is extremely generic, we will use .*\\.Random\\..*. It will catch all the methods within a Random class, regardless of their modules.\n\nbad_aspect.create_pointcut(get_classes(), \".*\\.Random\\..*\")\n\nCaptured method: random.Random.VERSION\nCaptured method: random.Random._randbelow\nCaptured method: random.Random._randbelow_with_getrandbits\nCaptured method: random.Random._randbelow_without_getrandbits\nCaptured method: random.Random.betavariate\nCaptured method: random.Random.choice\nCaptured method: random.Random.choices\nCaptured method: random.Random.expovariate\nCaptured method: random.Random.gammavariate\nCaptured method: random.Random.gauss\nCaptured method: random.Random.getrandbits\nCaptured method: random.Random.getstate\nCaptured method: random.Random.lognormvariate\nCaptured method: random.Random.normalvariate\nCaptured method: random.Random.paretovariate\nCaptured method: random.Random.randint\nCaptured method: random.Random.random\nCaptured method: random.Random.randrange\nCaptured method: random.Random.sample\nCaptured method: random.Random.seed\nCaptured method: random.Random.setstate\nCaptured method: random.Random.shuffle\nCaptured method: random.Random.triangular\nCaptured method: random.Random.uniform\nCaptured method: random.Random.vonmisesvariate\nCaptured method: random.Random.weibullvariate\n\n\nAll these methods have been catched, so we can call them and see the message."
+  },
+  {
+    "objectID": "example02.html#results",
+    "href": "example02.html#results",
+    "title": "Second example. Regular expressions.",
+    "section": "Results",
+    "text": "Results\nNow, we can call the randint method.\n\nr = Random()\nr.randint(1, 10)\n\ncatched!\ncatched!\ncatched!\ncatched!\ncatched!\n\n\n8\n\n\nWhy is it showing five messages if the defined Advice only adds one message? Well, things can get weird here.\nAs you may suppose, randint will call other Random’s method, also catched by the PointCut, so we are seeing all those messages together.\n\nr.randint??\n\n\nSignature: r.randint(a, b)\nDocstring:\nReturn random integer in range [a, b], including both end points.\n        \nSource:   \n    def randint(self, a, b):\n        \"\"\"Return random integer in range [a, b], including both end points.\n        \"\"\"\n        return self.randrange(a, b+1)\nFile:      /grupoa/config/miniconda3/lib/python3.8/random.py\nType:      method\n\n\n\nIn this toy example we can apreciate the potential complexity of the code flow. Indeed, this fact is a little bit controversial and this point is the reason why some reseachers advise against the usage of the AOP.\nHowever, we cannot ignore all the improvements and the non-duplication of the code that AOP brings to us.\nIn the following example we will explain how to dynamically modify the inputs of the method using AOP."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "aspectify",
@@ -32,6 +60,34 @@
     "href": "aop.html",
     "title": "aop",
     "section": "",
-    "text": "source\n\nis_detectable\n\n is_detectable (name, obj)\n\nDetermines when an object is potentially detectable to add an aspect to it.\n\n\n\n\nDetails\n\n\n\n\nname\nThe name of the object.\n\n\nobj\nThe builded object (potentially class).\n\n\n\n\nsource\n\n\nadvice\n\n advice (moment, todo)\n\nAdd an advice to a particular function.\n\n\n\n\n\n\n\n\nDetails\n\n\n\n\nmoment\nOne of ‘before’, ‘around’, ‘after_returning’, ‘after_throwing’ or ‘after’. See the documentation for more information.\n\n\ntodo\nWhat to do at the selected moment.\n\n\n\n\nsource\n\n\nAspect\n\n Aspect ()\n\nDefines a complete aspect."
+    "text": "source\n\nis_detectable\n\n is_detectable (name, obj)\n\nDetermines when an object is potentially detectable to add an aspect to it.\n\n\n\n\nDetails\n\n\n\n\nname\nThe name of the object.\n\n\nobj\nThe builded object (potentially class).\n\n\n\n\nsource\n\n\nadvice\n\n advice (moment, todo)\n\nAdd an advice to a particular function.\n\n\n\n\n\n\n\n\nDetails\n\n\n\n\nmoment\nOne of ‘before’, ‘around’, ‘after_returning’, ‘after_throwing’ or ‘after’. See the documentation for more information.\n\n\ntodo\nWhat to do at the selected moment.\n\n\n\n\nsource\n\n\nAspect\n\n Aspect ()\n\nDefines a complete aspect.\n\nsource\n\n\nAspect.create_pointcut\n\n Aspect.create_pointcut (objects, pattern, logging=True)\n\nCreates a new pointcut associated with the aspect.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nobjects\n\n\nAll the classes to which the aspect can be added. See the documentation for more information.\n\n\npattern\n\n\nThe pattern (string that defines a regular expression) used to select the methods to be added the aspect.\n\n\nlogging\nbool\nTrue\nWhether to log the captured methods with the PointCut.\n\n\n\n\nsource\n\n\nAspect.set_before\n\n Aspect.set_before (function)\n\nDetermines what to do before the execution of the method.\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment.\n\n\n\n\nsource\n\n\nAspect.set_around\n\n Aspect.set_around (function)\n\nDetermines what to do instead of the execution of the method.\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment.\n\n\n\n\nsource\n\n\nAspect.set_after_returning\n\n Aspect.set_after_returning (function)\n\nDetermines what to do after a complete execution of the method (when there are not exceptions).\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment.\n\n\n\n\nsource\n\n\nAspect.set_after_throwing\n\n Aspect.set_after_throwing (function)\n\nDetermines what to do when the execution of the method raises an exception.\n\nBEWARE! This method will not handle the exception (it will be finally raised), but it will allow you to do something when the exception is raised.\n\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment.\n\n\n\n\nsource\n\n\nAspect.set_after\n\n Aspect.set_after (function)\n\nDetermines what to do after the execution of the method. This function will be always executed after the after_returning and after_throwing functions.\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment."
+  },
+  {
+    "objectID": "example01.html",
+    "href": "example01.html",
+    "title": "First example. Logging.",
+    "section": "",
+    "text": "At this moment, we want to modify the randint method to log a message."
+  },
+  {
+    "objectID": "example01.html#library-import",
+    "href": "example01.html#library-import",
+    "title": "First example. Logging.",
+    "section": "Library import",
+    "text": "Library import\nFirst of all, we need to import to the Aspects file (aspects.py from now on) the libraries and modules that will be used. In this case, random.\nAdditionally, we need to define the get_classes method. This method is always needed in order to get all the available classes to add Advices.\n\ndef get_classes():\n    return [element for element in list(globals().items())]"
+  },
+  {
+    "objectID": "example01.html#aspect-definition",
+    "href": "example01.html#aspect-definition",
+    "title": "First example. Logging.",
+    "section": "Aspect definition",
+    "text": "Aspect definition\nAs a first AOP example, we can define our first Aspect. We call it log_aspect, and it will send a message when the function is being called.\nTo do so, we add the before Advice defined below. Here you can use defined functions or lambda.\n\nlog_aspect = Aspect()\nlog_aspect.set_before(lambda *a, **k: print(\"catched!\"))\n\nNow, we create an Advice to define which methods will show this message. The methods are named as follows:\nmodule.Class.method_name\nSo, as we want to only change the random.Random.randint method, we use its fullname.\n\nNOTE: if we wanted to select several methods at once, we could have used a regular expression. For example, .*\\.Random\\..* will catch all the methods within a Random class, regardless of their modules.\n\n\nlog_aspect.create_pointcut(get_classes(), \"random.Random.randint\")\n\nCaptured method: random.Random.randint\n\n\ncreate_pointcut method has a default parameter called logging set to true in order to show the captured methods. You can deactivate it if you wish.\nAfter the PointCut is created, every method catched (random.Random.randint) will be modified by the defined PointCuts.\nFrom now on, when randint is used, we will see the “catched!” message."
+  },
+  {
+    "objectID": "example01.html#results",
+    "href": "example01.html#results",
+    "title": "First example. Logging.",
+    "section": "Results",
+    "text": "Results\n\nr = Random()\nr.randint(1, 10)\n\ncatched!\n\n\n9\n\n\nThis simple example shows how to add logging functionality to the defined code, even when the code is a black box (a library not developed by the user that is using Aspectify).\nIn the next example we will explain why you should be strictly accurate using the create_pointcut patter syntax."
   }
 ]
