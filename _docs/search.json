@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "aspectify",
+    "section": "",
+    "text": "Aspect Oriented Programming is a programming paradigm that allows the user to separate some cross-cutting content from the main code, such as the logging or a database connection.\nAs it may be known, other programming languages has some functionallity (implemented or plugged in) to use this paradigm as an additional abstract layer to the core application. AspectJ (used in Java), can sound familiar to the reader.\nIn order to bring this amazing and powerful functionality to Python (which, in addition, will allow us to add it dynamically instead of using a weaver –as it is done in Java–), we have defined Aspectify, a Python library to manage AOP."
+  },
+  {
+    "objectID": "index.html#background-concepts",
+    "href": "index.html#background-concepts",
+    "title": "aspectify",
+    "section": "Background concepts",
+    "text": "Background concepts\nBefore introducing the library, it is important to define some concepts used in AOP. Those are: - Aspect (what): a cross-cutting concept. In fact, an Aspect will group some functionalies. These, which will modify the natural behaviour of a method, are called Advices. - PointCut (when): a fragment of code where the Aspect is defined. Can be multiple PointCuts for each Aspect (indeed, it will). - Advice (when and what to do): The code fragment to execute when the PointCut occurs and the moment when the new behaviuor must occur. Originally, only three moments were defined (before, around –instead of– and after), but nowadays new moments are defined, such as “after throwing an exception” (after_throwing) or “after NOT throwing an exception” (after_returning)."
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "aspectify",
+    "section": "Installation",
+    "text": "Installation\nIn order to install the library, it is only needed to execute the pypi comand that follows:\npip install aspectify\n\nADVICE: You should use a virtual environment to install the packages associated with your proyect."
+  },
+  {
+    "objectID": "index.html#why-do-we-need-aspectify",
+    "href": "index.html#why-do-we-need-aspectify",
+    "title": "aspectify",
+    "section": "Why do we need Aspectify",
+    "text": "Why do we need Aspectify\nOnce the background is defined and the library is installed, we can start to create the AOP layer to our projects.\n\nThe core project\nIn order to use the library, we need a project. For example, we will use the random library for Python.\n\nfrom random import Random\n\nNow, we can use it to generate some integers.\n\nr = Random()\nr.randint(5, 10)\n\n9\n\n\nAs you can see in its documentation, randint (called with parameters a and b) can generate the b value itself (it is a closed range [5, 10]).\nIf we want to change this behaviour to the normal random functions behaviour (the range is closed-opened [5, 10)), you will need to redefine it. Furthermore, if other functions or library use this method, they will not use yours.\nHow can we solve it? Using AOP.\nDuring this introduction, we have seen the background concepts and how to install the Aspectify library. In the next section we will explain how to use it with a simple example."
+  },
+  {
+    "objectID": "aop.html",
+    "href": "aop.html",
+    "title": "aop",
+    "section": "",
+    "text": "source\n\nis_detectable\n\n is_detectable (name, obj)\n\nDetermines when an object is potentially detectable to add an aspect to it.\n\n\n\n\nDetails\n\n\n\n\nname\nThe name of the object.\n\n\nobj\nThe builded object (potentially class).\n\n\n\n\nsource\n\n\nadvice\n\n advice (moment, todo)\n\nAdd an advice to a particular function.\n\n\n\n\n\n\n\n\nDetails\n\n\n\n\nmoment\nOne of ‘before’, ‘around’, ‘after_returning’, ‘after_throwing’ or ‘after’. See the documentation for more information.\n\n\ntodo\nWhat to do at the selected moment.\n\n\n\n\nsource\n\n\nAspect\n\n Aspect ()\n\nDefines a complete aspect."
+  }
+]
