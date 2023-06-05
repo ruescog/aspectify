@@ -26,17 +26,20 @@ used in AOP. Those are: -
 (*what*): a cross-cutting concept. In fact, an
 [`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect) will
 group some functionalies. These, which will modify the natural behaviour
-of a method, are called `Advice`s. - `PointCut` (*when*): a fragment of
-code where the
+of a method, are called
+[`advice`](https://ruescog.github.io/aspectify/aop.html#advice)s. -
+`PointCut` (*when*): a fragment of code where the
 [`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect) is
 defined. Can be multiple `PointCut`s for each
 [`Aspect`](https://ruescog.github.io/aspectify/aop.html#aspect) (indeed,
-it will). - `Advice` (*when and what to do*): The code fragment to
-execute when the `PointCut` occurs and the moment when the new behaviuor
-must occur. Originally, only three moments were defined (`before`,
-`around` –instead of– and `after`), but nowadays new moments are
-defined, such as “after throwing an exception” (`after_throwing`) or
-“after NOT throwing an exception” (`after_returning`).
+it will). -
+[`advice`](https://ruescog.github.io/aspectify/aop.html#advice) (*when
+and what to do*): The code fragment to execute when the `PointCut`
+occurs and the moment when the new behaviuor must occur. Originally,
+only three moments were defined (`before`, `around` –instead of– and
+`after`), but nowadays new moments are defined, such as “after throwing
+an exception” (`after_throwing`) or “after NOT throwing an exception”
+(`after_returning`).
 
 ## Installation
 
