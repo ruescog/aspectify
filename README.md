@@ -87,3 +87,8 @@ How can we solve it? Using AOP.
 During this introduction, we have seen the background concepts and how
 to install the `Aspectify` library. In the next section we will explain
 how to use it with a simple example.
+
+- [Example 1:
+  Logging.](https://ruescog.github.io/aspectify/example01.html)
+- [Example 2: Regular
+  expressions.](https://ruescog.github.io/aspectify/example02.html)
