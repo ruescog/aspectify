@@ -95,3 +95,5 @@ how to use it with a simple example.
   Logging.](https://ruescog.github.io/aspectify/example01.html)
 - [Example 2: Regular
   expressions.](https://ruescog.github.io/aspectify/example02.html)
+- [Example 3: Creating
+  advices.](https://ruescog.github.io/aspectify/example03.html)

@@ -23,8 +23,9 @@ def is_detectable(name, # The name of the object.
             )
 
 # %% ../nbs/00_aop.ipynb 5
-def advice(moment, # One of 'before', 'around', 'after_returning', 'after_throwing' or 'after'. See the documentation for more information.
-           todo # What to do at the selected moment.
+def advice(moment: str, # One of 'before', 'around', 'after_returning', 'after_throwing' or 'after'. See the documentation for more information.
+           todo: object, # What to do at the selected moment.
+           use_reference: bool = False # Whether to use or not the referenced object, used when the catched method is not a class method.
           ):
     """
     Add an advice to a particular function.
@@ -32,7 +33,8 @@ def advice(moment, # One of 'before', 'around', 'after_returning', 'after_throwi
     def dec(method):
         @wraps(method)
         def inner(*args, **kwargs):
-            todo_args = args[1:] # discards the 0-index argument, which is the object itself
+            todo_args = args if use_reference else args[1:]
+
             if moment not in ["before", "around", "after_returning", "after_throwing", "after"]:
                 raise Exception(f"Moment {moment} is not defined.")
 
