@@ -181,6 +181,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./example02.html" class="sidebar-item-text sidebar-link active">Second example. Regular expressions.</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./example03.html" class="sidebar-item-text sidebar-link">Third Example. Creating advices.</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -193,6 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#library-import" id="toc-library-import" class="nav-link active" data-scroll-target="#library-import">Library import</a></li>
   <li><a href="#aspect-definition" id="toc-aspect-definition" class="nav-link" data-scroll-target="#aspect-definition">Aspect definition</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ruescog/aspectify/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -223,24 +229,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <section id="library-import" class="level2">
 <h2 class="anchored" data-anchor-id="library-import">Library import</h2>
-<p>First of all, we need to import to the <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a>s file (<code>aspects.py</code> from now on) the libraries and modules that will be used. In this case, <code>random</code>.</p>
+<p>First of all, we need to import to the <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a>s file the libraries and modules that will be used. In this case, <code>random</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> aspectify.aop <span class="im">import</span> Aspect</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> Random</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Additionally, we need to define the <code>get_classes</code> method. This method is always needed in order to get all the available classes to add <code>Advice</code>s.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_classes():</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [element <span class="cf">for</span> element <span class="kw">in</span> <span class="bu">list</span>(<span class="bu">globals</span>().items())]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_classes():</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [element <span class="cf">for</span> element <span class="kw">in</span> <span class="bu">list</span>(<span class="bu">globals</span>().items())]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="aspect-definition" class="level2">
 <h2 class="anchored" data-anchor-id="aspect-definition">Aspect definition</h2>
 <p>In this example, we will define an <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> called <code>bad_aspect</code>, and it will send a message when the function is being called.</p>
-<p>To do so, we add the <code>before</code> <code>Advice</code> defined below. Here you can use defined functions or <code>lambda</code>.</p>
+<p>To do so, we add the <code>before</code> <a href="https://ruescog.github.io/aspectify/aop.html#advice"><code>advice</code></a> defined below. Here you can use defined functions or <code>lambda</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bad_aspect <span class="op">=</span> Aspect()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>bad_aspect.set_before(<span class="kw">lambda</span> <span class="op">*</span>a, <span class="op">**</span>k: <span class="bu">print</span>(<span class="st">"catched!"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bad_aspect <span class="op">=</span> Aspect()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bad_aspect.set_before(<span class="kw">lambda</span> <span class="op">*</span>a, <span class="op">**</span>k: <span class="bu">print</span>(<span class="st">"catched!"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, we create an <code>Advice</code> to define which methods will show this message. As we want to show you what happen when the regular expression is extremely generic, we will use <code>.*\.Random\..*</code>. It will catch all the methods within a <code>Random</code> class, regardless of their modules.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bad_aspect.create_pointcut(get_classes(), <span class="st">".*\.Random\..*"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bad_aspect.create_pointcut(get_classes(), <span class="st">".*\.Random\..*"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Captured method: random.Random.VERSION
 Captured method: random.Random._randbelow
@@ -276,23 +286,41 @@ Captured method: random.Random.weibullvariate</code></pre>
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <p>Now, we can call the <code>randint</code> method.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> Random()</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>r.randint(<span class="dv">1</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> Random()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>r.randint(<span class="dv">1</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>catched!
+catched!
 catched!
 catched!
 catched!
 catched!</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<pre><code>8</code></pre>
+<pre><code>3</code></pre>
 </div>
 </div>
 <p>Why is it showing five messages if the defined <code>Advice</code> only adds one message? Well, things can get weird here.</p>
 <p>As you may suppose, <code>randint</code> will call other <code>Random</code>’s method, also catched by the <code>PointCut</code>, so we are seeing all those messages together.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>r.randint??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Random.<span class="fu">__init__</span>??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Signature:</span> Random<span class="ansi-blue-fg">.</span>__init__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Source:</span>   
+    <span class="ansi-green-fg">def</span> __init__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-blue-fg">"""Initialize an instance.</span>
+<span class="ansi-blue-fg">        Optional argument x controls seeding, as for Random.seed().</span>
+<span class="ansi-blue-fg">        """</span>
+        self<span class="ansi-blue-fg">.</span>seed<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        self<span class="ansi-blue-fg">.</span>gauss_next <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span>
+<span class="ansi-red-fg">File:</span>      /grupoa/config/miniconda3/lib/python3.8/random.py
+<span class="ansi-red-fg">Type:</span>      function</pre>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>r.randint??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">Signature:</span> r<span class="ansi-blue-fg">.</span>randint<span class="ansi-blue-fg">(</span>a<span class="ansi-blue-fg">,</span> b<span class="ansi-blue-fg">)</span>
@@ -309,8 +337,12 @@ Return random integer in range [a, b], including both end points.
 </div>
 </div>
 </div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>In this toy example we can apreciate the potential complexity of the code flow. Indeed, this fact is a little bit controversial and this point is the reason why some reseachers advise against the usage of the AOP.</p>
 <p>However, we cannot ignore all the improvements and the non-duplication of the code that AOP brings to us.</p>
+<p>In the <a href="https://ruescog.github.io/aspectify/example03.html">next example</a> we will explain how to create the <a href="https://ruescog.github.io/aspectify/aop.html#advice"><code>advice</code></a>s, which input parameters do we need and how can we apply several <code>PointCut</code>s to the same method.</p>
 
 
 </section>

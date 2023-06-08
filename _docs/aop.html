@@ -119,6 +119,11 @@ ul.task-list li input[type="checkbox"] {
   <a href="./example02.html" class="sidebar-item-text sidebar-link">Second example. Regular expressions.</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./example03.html" class="sidebar-item-text sidebar-link">Third Example. Creating advices.</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -198,33 +203,47 @@ ul.task-list li input[type="checkbox"] {
 <section id="advice" class="level3">
 <h3 class="anchored" data-anchor-id="advice">advice</h3>
 <blockquote class="blockquote">
-<pre><code> advice (moment, todo)</code></pre>
+<pre><code> advice (moment:str, todo:object, use_reference:bool=False)</code></pre>
 </blockquote>
 <p>Add an advice to a particular function.</p>
 <table class="table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 84%">
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
 </colgroup>
 <thead>
 <tr class="header">
 <th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
 <th><strong>Details</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>moment</td>
+<td>str</td>
+<td></td>
 <td>One of ‘before’, ‘around’, ‘after_returning’, ‘after_throwing’ or ‘after’. See the documentation for more information.</td>
 </tr>
 <tr class="even">
 <td>todo</td>
+<td>object</td>
+<td></td>
 <td>What to do at the selected moment.</td>
+</tr>
+<tr class="odd">
+<td>use_reference</td>
+<td>bool</td>
+<td>False</td>
+<td>Whether to use or not the referenced object, used when the catched method is not a class method.</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L53" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L55" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="aspect" class="level3">
 <h3 class="anchored" data-anchor-id="aspect">Aspect</h3>
@@ -233,7 +252,7 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 <p>Defines a complete aspect.</p>
 <hr>
-<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L68" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L70" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="aspect.create_pointcut" class="level3">
 <h3 class="anchored" data-anchor-id="aspect.create_pointcut">Aspect.create_pointcut</h3>
@@ -278,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <hr>
-<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L107" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L109" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="aspect.set_before" class="level3">
 <h3 class="anchored" data-anchor-id="aspect.set_before">Aspect.set_before</h3>
@@ -301,7 +320,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <hr>
-<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L115" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L117" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="aspect.set_around" class="level3">
 <h3 class="anchored" data-anchor-id="aspect.set_around">Aspect.set_around</h3>
@@ -324,7 +343,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <hr>
-<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L123" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L125" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="aspect.set_after_returning" class="level3">
 <h3 class="anchored" data-anchor-id="aspect.set_after_returning">Aspect.set_after_returning</h3>
@@ -347,7 +366,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <hr>
-<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L131" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L133" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="aspect.set_after_throwing" class="level3">
 <h3 class="anchored" data-anchor-id="aspect.set_after_throwing">Aspect.set_after_throwing</h3>
@@ -373,7 +392,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <hr>
-<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L141" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ruescog/aspectify/blob/main/aspectify/aop.py#L143" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="aspect.set_after" class="level3">
 <h3 class="anchored" data-anchor-id="aspect.set_after">Aspect.set_after</h3>

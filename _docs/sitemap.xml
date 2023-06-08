@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ruescog.github.io/aspectify/example02.html</loc>
-    <lastmod>2023-06-05T07:55:15.409Z</lastmod>
+    <lastmod>2023-06-08T08:05:34.371Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruescog.github.io/aspectify/example03.html</loc>
+    <lastmod>2023-06-08T08:05:34.703Z</lastmod>
   </url>
   <url>
     <loc>https://ruescog.github.io/aspectify/index.html</loc>
-    <lastmod>2023-06-05T07:55:15.885Z</lastmod>
+    <lastmod>2023-06-08T08:05:35.191Z</lastmod>
   </url>
   <url>
     <loc>https://ruescog.github.io/aspectify/aop.html</loc>
-    <lastmod>2023-06-05T07:55:16.181Z</lastmod>
+    <lastmod>2023-06-08T08:05:35.495Z</lastmod>
   </url>
   <url>
     <loc>https://ruescog.github.io/aspectify/example01.html</loc>
-    <lastmod>2023-06-05T07:55:16.637Z</lastmod>
+    <lastmod>2023-06-08T08:05:35.947Z</lastmod>
   </url>
 </urlset>

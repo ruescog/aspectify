@@ -182,6 +182,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./example02.html" class="sidebar-item-text sidebar-link">Second example. Regular expressions.</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./example03.html" class="sidebar-item-text sidebar-link">Third Example. Creating advices.</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -231,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In order to bring this amazing and powerful functionality to Python (which, in addition, will allow us to add it dynamically instead of using a weaver –as it is done in Java–), we have defined <code>Aspectify</code>, a Python library to manage AOP.</p>
 <section id="background-concepts" class="level2">
 <h2 class="anchored" data-anchor-id="background-concepts">Background concepts</h2>
-<p>Before introducing the library, it is important to define some concepts used in AOP. Those are: - <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> (<em>what</em>): a cross-cutting concept. In fact, an <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> will group some functionalies. These, which will modify the natural behaviour of a method, are called <code>Advice</code>s. - <code>PointCut</code> (<em>when</em>): a fragment of code where the <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> is defined. Can be multiple <code>PointCut</code>s for each <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> (indeed, it will). - <code>Advice</code> (<em>when and what to do</em>): The code fragment to execute when the <code>PointCut</code> occurs and the moment when the new behaviuor must occur. Originally, only three moments were defined (<code>before</code>, <code>around</code> –instead of– and <code>after</code>), but nowadays new moments are defined, such as “after throwing an exception” (<code>after_throwing</code>) or “after NOT throwing an exception” (<code>after_returning</code>).</p>
+<p>Before introducing the library, it is important to define some concepts used in AOP. Those are: - <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> (<em>what</em>): a cross-cutting concept. In fact, an <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> will group some functionalies. These, which will modify the natural behaviour of a method, are called <a href="https://ruescog.github.io/aspectify/aop.html#advice"><code>advice</code></a>s. - <code>PointCut</code> (<em>when</em>): a fragment of code where the <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> is defined. Can be multiple <code>PointCut</code>s for each <a href="https://ruescog.github.io/aspectify/aop.html#aspect"><code>Aspect</code></a> (indeed, it will). - <a href="https://ruescog.github.io/aspectify/aop.html#advice"><code>advice</code></a> (<em>when and what to do</em>): The code fragment to execute when the <code>PointCut</code> occurs and the moment when the new behaviuor must occur. Originally, only three moments were defined (<code>before</code>, <code>around</code> –instead of– and <code>after</code>), but nowadays new moments are defined, such as “after throwing an exception” (<code>after_throwing</code>) or “after NOT throwing an exception” (<code>after_returning</code>).</p>
 </section>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
@@ -262,6 +267,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If we want to change this behaviour to the normal random functions behaviour (the range is closed-opened [5, 10)), you will need to redefine it. Furthermore, if other functions or library use this method, they will not use yours.</p>
 <p>How can we solve it? Using AOP.</p>
 <p>During this introduction, we have seen the background concepts and how to install the <code>Aspectify</code> library. In the next section we will explain how to use it with a simple example.</p>
+<ul>
+<li><a href="https://ruescog.github.io/aspectify/example01.html">Example 1: Logging.</a></li>
+<li><a href="https://ruescog.github.io/aspectify/example02.html">Example 2: Regular expressions.</a></li>
+<li><a href="https://ruescog.github.io/aspectify/example03.html">Example 3: Creating advices.</a></li>
+</ul>
 
 
 </section>
