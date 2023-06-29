@@ -5,6 +5,7 @@ __all__ = ['is_detectable', 'advice', 'Aspect']
 
 # %% ../nbs/00_aop.ipynb 3
 import re
+import logging
 
 from functools import wraps
 
@@ -33,19 +34,39 @@ def advice(moment: str, # One of 'before', 'around', 'after_returning', 'after_t
     def dec(method):
         @wraps(method)
         def inner(*args, **kwargs):
-            todo_args = args if use_reference else args[1:]
-
             if moment not in ["before", "around", "after_returning", "after_throwing", "after"]:
                 raise Exception(f"Moment {moment} is not defined.")
-
+            
+            obj_ref = [args[0]]
+            todo_args = args if use_reference else args[1:]
+                
             try:
-                if moment == "before": todo(*todo_args, **kwargs) # returned value is lost
-                result = todo(*todo_args, **kwargs) if moment == "around" else method(*args, **kwargs)
-                if moment in ["after_returning", "after"]: todo(*todo_args, **kwargs)
+                if moment == "before":
+                    logging.info("Executed 'before' todo method")
+                    new_args = todo(*todo_args, **kwargs)
+                    if new_args:
+                        logging.warning(f"Args changed from {list(args)} to {obj_ref + new_args}")
+                        args = obj_ref + new_args
+                        todo_args = new_args
+
+                 
+                if moment == "around":
+                    logging.info("Executed 'around' todo method")
+                    result = todo(*todo_args, **kwargs) 
+                else:
+                    result = method(*args, **kwargs)
+                
+                if moment in ["after_returning", "after"]:
+                    logging.info("Executed 'after_returning' or 'after' todo method")
+                    todo(*todo_args, **kwargs)
+                    
                 return result
 
             except Exception as e:
-                if moment in ["after_throwing", "after"]: todo(e, *todo_args, **kwargs)
+                if moment in ["after_throwing", "after"]:
+                    logging.info("Executed 'after_throwing' or 'after' todo method")
+                    todo(e, *todo_args, **kwargs)
+
                 raise e
 
         return inner
