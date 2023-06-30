@@ -99,3 +99,5 @@ how to use it with a simple example.
   advices.](https://ruescog.github.io/aspectify/example03.html)
 - [Example 4: Dynamically input arguments
   modification.](https://ruescog.github.io/aspectify/example04.html)
+- [Example 5: Creating partial
+  functions.](https://ruescog.github.io/aspectify/example05.html)
