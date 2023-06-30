@@ -1,0 +1,233 @@
+[
+  {
+    "objectID": "example02.html",
+    "href": "example02.html",
+    "title": "Second example. Regular expressions.",
+    "section": "",
+    "text": "During this example, we will show you why you should be stricty accurate using the create_pointcut method."
+  },
+  {
+    "objectID": "example02.html#library-import",
+    "href": "example02.html#library-import",
+    "title": "Second example. Regular expressions.",
+    "section": "Library import",
+    "text": "Library import\nFirst of all, we need to import to the Aspects file the libraries and modules that will be used. In this case, random.\n\nfrom aspectify.aop import Aspect\nfrom random import Random\n\nAdditionally, we need to define the get_classes method. This method is always needed in order to get all the available classes to add Advices.\n\ndef get_classes():\n    return [element for element in list(globals().items())]"
+  },
+  {
+    "objectID": "example02.html#aspect-definition",
+    "href": "example02.html#aspect-definition",
+    "title": "Second example. Regular expressions.",
+    "section": "Aspect definition",
+    "text": "Aspect definition\nIn this example, we will define an Aspect called bad_aspect, and it will send a message when the function is being called.\nTo do so, we add the before advice defined below. Here you can use defined functions or lambda.\n\nbad_aspect = Aspect()\nbad_aspect.set_before(lambda *a, **k: print(\"catched!\"))\n\nNow, we create an Advice to define which methods will show this message. As we want to show you what happen when the regular expression is extremely generic, we will use .*\\.Random\\..*. It will catch all the methods within a Random class, regardless of their modules.\n\nbad_aspect.create_pointcut(get_classes(), \".*\\.Random\\..*\")\n\nCaptured method: random.Random.VERSION\nCaptured method: random.Random._randbelow\nCaptured method: random.Random._randbelow_with_getrandbits\nCaptured method: random.Random._randbelow_without_getrandbits\nCaptured method: random.Random.betavariate\nCaptured method: random.Random.choice\nCaptured method: random.Random.choices\nCaptured method: random.Random.expovariate\nCaptured method: random.Random.gammavariate\nCaptured method: random.Random.gauss\nCaptured method: random.Random.getrandbits\nCaptured method: random.Random.getstate\nCaptured method: random.Random.lognormvariate\nCaptured method: random.Random.normalvariate\nCaptured method: random.Random.paretovariate\nCaptured method: random.Random.randint\nCaptured method: random.Random.random\nCaptured method: random.Random.randrange\nCaptured method: random.Random.sample\nCaptured method: random.Random.seed\nCaptured method: random.Random.setstate\nCaptured method: random.Random.shuffle\nCaptured method: random.Random.triangular\nCaptured method: random.Random.uniform\nCaptured method: random.Random.vonmisesvariate\nCaptured method: random.Random.weibullvariate\n\n\nAll these methods have been catched, so we can call them and see the message."
+  },
+  {
+    "objectID": "example02.html#results",
+    "href": "example02.html#results",
+    "title": "Second example. Regular expressions.",
+    "section": "Results",
+    "text": "Results\nNow, we can call the randint method.\n\nr = Random()\nr.randint(1, 10)\n\ncatched!\ncatched!\ncatched!\ncatched!\ncatched!\ncatched!\n\n\n3\n\n\nWhy is it showing five messages if the defined Advice only adds one message? Well, things can get weird here.\nAs you may suppose, randint will call other Random’s method, also catched by the PointCut, so we are seeing all those messages together.\n\nRandom.__init__??\n\n\nSignature: Random.__init__(self, x=None)\nSource:   \n    def __init__(self, x=None):\n        \"\"\"Initialize an instance.\n        Optional argument x controls seeding, as for Random.seed().\n        \"\"\"\n        self.seed(x)\n        self.gauss_next = None\nFile:      /grupoa/config/miniconda3/lib/python3.8/random.py\nType:      function\n\n\n\n\nr.randint??\n\n\nSignature: r.randint(a, b)\nDocstring:\nReturn random integer in range [a, b], including both end points.\n        \nSource:   \n    def randint(self, a, b):\n        \"\"\"Return random integer in range [a, b], including both end points.\n        \"\"\"\n        return self.randrange(a, b+1)\nFile:      /grupoa/config/miniconda3/lib/python3.8/random.py\nType:      method"
+  },
+  {
+    "objectID": "example02.html#conclusion",
+    "href": "example02.html#conclusion",
+    "title": "Second example. Regular expressions.",
+    "section": "Conclusion",
+    "text": "Conclusion\nIn this toy example we can apreciate the potential complexity of the code flow. Indeed, this fact is a little bit controversial and this point is the reason why some reseachers advise against the usage of the AOP.\nHowever, we cannot ignore all the improvements and the non-duplication of the code that AOP brings to us.\nIn the next example we will explain how to create the advices, which input parameters do we need and how can we apply several PointCuts to the same method."
+  },
+  {
+    "objectID": "aop.html",
+    "href": "aop.html",
+    "title": "aop",
+    "section": "",
+    "text": "source\n\nis_detectable\n\n is_detectable (name, obj)\n\nDetermines when an object is potentially detectable to add an aspect to it.\n\n\n\n\nDetails\n\n\n\n\nname\nThe name of the object.\n\n\nobj\nThe builded object (potentially class).\n\n\n\n\nsource\n\n\nadvice\n\n advice (moment:str, todo:object, use_reference:bool=False)\n\nAdd an advice to a particular function.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nmoment\nstr\n\nOne of ‘before’, ‘around’, ‘after_returning’, ‘after_throwing’ or ‘after’. See the documentation for more information.\n\n\ntodo\nobject\n\nWhat to do at the selected moment.\n\n\nuse_reference\nbool\nFalse\nWhether to use or not the referenced object, used when the catched method is not a class method.\n\n\n\n\nsource\n\n\nAspect\n\n Aspect ()\n\nDefines a complete aspect.\n\nsource\n\n\nAspect.create_pointcut\n\n Aspect.create_pointcut (objects, pattern, logging=True)\n\nCreates a new pointcut associated with the aspect.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nobjects\n\n\nAll the classes to which the aspect can be added. See the documentation for more information.\n\n\npattern\n\n\nThe pattern (string that defines a regular expression) used to select the methods to be added the aspect.\n\n\nlogging\nbool\nTrue\nWhether to log the captured methods with the PointCut.\n\n\n\n\nsource\n\n\nAspect.set_before\n\n Aspect.set_before (function)\n\nDetermines what to do before the execution of the method.\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment.\n\n\n\n\nsource\n\n\nAspect.set_around\n\n Aspect.set_around (function)\n\nDetermines what to do instead of the execution of the method.\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment.\n\n\n\n\nsource\n\n\nAspect.set_after_returning\n\n Aspect.set_after_returning (function)\n\nDetermines what to do after a complete execution of the method (when there are not exceptions).\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment.\n\n\n\n\nsource\n\n\nAspect.set_after_throwing\n\n Aspect.set_after_throwing (function)\n\nDetermines what to do when the execution of the method raises an exception.\n\nBEWARE! This method will not handle the exception (it will be finally raised), but it will allow you to do something when the exception is raised.\n\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment.\n\n\n\n\nsource\n\n\nAspect.set_after\n\n Aspect.set_after (function)\n\nDetermines what to do after the execution of the method. This function will be always executed after the after_returning and after_throwing functions.\n\n\n\n\nDetails\n\n\n\n\nfunction\nThe ‘to do’ function in that moment."
+  },
+  {
+    "objectID": "example01.html",
+    "href": "example01.html",
+    "title": "First example. Logging.",
+    "section": "",
+    "text": "At this moment, we want to modify the randint method to log a message."
+  },
+  {
+    "objectID": "example01.html#library-import",
+    "href": "example01.html#library-import",
+    "title": "First example. Logging.",
+    "section": "Library import",
+    "text": "Library import\nFirst of all, we need to import to the Aspects file (aspects.py from now on) the libraries and modules that will be used. In this case, random.\n\nfrom aspectify.aop import Aspect\nfrom random import Random\n\nAdditionally, we need to define the get_classes method. This method is always needed in order to get all the available classes to add Advices.\n\ndef get_classes():\n    return [element for element in list(globals().items())]"
+  },
+  {
+    "objectID": "example01.html#aspect-definition",
+    "href": "example01.html#aspect-definition",
+    "title": "First example. Logging.",
+    "section": "Aspect definition",
+    "text": "Aspect definition\nAs a first AOP example, we can define our first Aspect. We call it log_aspect, and it will send a message when the function is being called.\nTo do so, we add the before advice defined below. Here you can use defined functions or lambda.\n\nlog_aspect = Aspect()\nlog_aspect.set_before(lambda *a, **k: print(\"catched!\"))\n\nNow, we create an Advice to define which methods will show this message. The methods are named as follows:\nmodule.Class.method_name\nSo, as we want to only change the random.Random.randint method, we use its fullname.\n\nNOTE: if we wanted to select several methods at once, we could have used a regular expression. For example, .*\\.Random\\..* will catch all the methods within a Random class, regardless of their modules.\n\n\nlog_aspect.create_pointcut(get_classes(), \"random.Random.randint\")\n\nCaptured method: random.Random.randint\n\n\ncreate_pointcut method has a default parameter called logging set to true in order to show the captured methods. You can deactivate it if you wish.\nAfter the PointCut is created, every method catched (random.Random.randint) will be modified by the defined PointCuts.\nFrom now on, when randint is used, we will see the “catched!” message."
+  },
+  {
+    "objectID": "example01.html#results",
+    "href": "example01.html#results",
+    "title": "First example. Logging.",
+    "section": "Results",
+    "text": "Results\n\nr = Random()\nr.randint(1, 10)\n\ncatched!\n\n\n9"
+  },
+  {
+    "objectID": "example01.html#conclusion",
+    "href": "example01.html#conclusion",
+    "title": "First example. Logging.",
+    "section": "Conclusion",
+    "text": "Conclusion\nThis simple example shows how to add logging functionality to the defined code, even when the code is a black box (a library not developed by the user that is using Aspectify).\nIn the next example we will explain why you should be strictly accurate using the create_pointcut patter syntax."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "aspectify",
+    "section": "",
+    "text": "Aspect Oriented Programming is a programming paradigm that allows the user to separate some cross-cutting content from the main code, such as the logging or a database connection.\nAs it may be known, other programming languages has some functionallity (implemented or plugged in) to use this paradigm as an additional abstract layer to the core application. AspectJ (used in Java), can sound familiar to the reader.\nIn order to bring this amazing and powerful functionality to Python (which, in addition, will allow us to add it dynamically instead of using a weaver –as it is done in Java–), we have defined Aspectify, a Python library to manage AOP."
+  },
+  {
+    "objectID": "index.html#background-concepts",
+    "href": "index.html#background-concepts",
+    "title": "aspectify",
+    "section": "Background concepts",
+    "text": "Background concepts\nBefore introducing the library, it is important to define some concepts used in AOP. Those are: - Aspect (what): a cross-cutting concept. In fact, an Aspect will group some functionalies. These, which will modify the natural behaviour of a method, are called advices. - PointCut (when): a fragment of code where the Aspect is defined. Can be multiple PointCuts for each Aspect (indeed, it will). - advice (when and what to do): The code fragment to execute when the PointCut occurs and the moment when the new behaviuor must occur. Originally, only three moments were defined (before, around –instead of– and after), but nowadays new moments are defined, such as “after throwing an exception” (after_throwing) or “after NOT throwing an exception” (after_returning)."
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "aspectify",
+    "section": "Installation",
+    "text": "Installation\nIn order to install the library, it is only needed to execute the pypi comand that follows:\npip install aspectify\n\nADVICE: You should use a virtual environment to install the packages associated with your proyect."
+  },
+  {
+    "objectID": "index.html#why-do-we-need-aspectify",
+    "href": "index.html#why-do-we-need-aspectify",
+    "title": "aspectify",
+    "section": "Why do we need Aspectify",
+    "text": "Why do we need Aspectify\nOnce the background is defined and the library is installed, we can start to create the AOP layer to our projects.\n\nThe core project\nIn order to use the library, we need a project. For example, we will use the random library for Python.\n\nfrom random import Random\n\nNow, we can use it to generate some integers.\n\nr = Random()\nr.randint(5, 10)\n\n9\n\n\nAs you can see in its documentation, randint (called with parameters a and b) can generate the b value itself (it is a closed range [5, 10]).\nIf we want to change this behaviour to the normal random functions behaviour (the range is closed-opened [5, 10)), you will need to redefine it. Furthermore, if other functions or library use this method, they will not use yours.\nHow can we solve it? Using AOP.\nDuring this introduction, we have seen the background concepts and how to install the Aspectify library. In the next section we will explain how to use it with a simple example.\n\nExample 1: Logging.\nExample 2: Regular expressions.\nExample 3: Creating advices.\nExample 4: Dynamically input arguments modification.\nExample 5: Creating partial functions."
+  },
+  {
+    "objectID": "example03.html",
+    "href": "example03.html",
+    "title": "Third Example. Creating advices.",
+    "section": "",
+    "text": "As we have seen before, it is needed to pass a function to the set_moment (before, after…) methods. Those methods define advices that will be used to add the new functionallity.\nDuring this example, we will explain what those functions look like."
+  },
+  {
+    "objectID": "example03.html#library-import",
+    "href": "example03.html#library-import",
+    "title": "Third Example. Creating advices.",
+    "section": "Library import",
+    "text": "Library import\nFirst of all, we need to import to the Aspects file the libraries and modules that will be used. In this case, random.\n\nfrom aspectify.aop import Aspect\nfrom random import Random\n\nAdditionally, we need to define the get_classes method.\n\ndef get_classes():\n    return [element for element in list(globals().items())]"
+  },
+  {
+    "objectID": "example03.html#advice-definition",
+    "href": "example03.html#advice-definition",
+    "title": "Third Example. Creating advices.",
+    "section": "advice definition",
+    "text": "advice definition\nIn this example, we will define an Aspect called test_aspect, and we will modify it behaviour during the example.\n\ntest_aspect = Aspect()\n\nAs previously seen, we can add a before advice, just using the set_before method.\n\ntest_aspect.set_before(lambda *a, **k: print(\"catched!\"))\n\nAs we can see, the used lambda has two input parameters, *a and **k, representing all the parameters that the original method can have.\n\nREMEMBER: We can access to the parameters used in the original call of the catched method.\n\nIn this case, those parameters are ignored, because the method just print a message.\n*a and **k input parameters will be used in all the advices definitions except in the definition of the method after_throwing, where we must recieve a third input parameter e: the raised exception. For example:\n\ntest_aspect.set_after_throwing(lambda e, *a, **k: print(e, \" was raised.\"))\n\nWe can add these new functionallity to some methods in random, for example those starting with the letter ‘c’.\n\ntest_aspect.create_pointcut(get_classes(), \".*\\.Random\\.c.*\")\n\nCaptured method: random.Random.choice\nCaptured method: random.Random.choices"
+  },
+  {
+    "objectID": "example03.html#results",
+    "href": "example03.html#results",
+    "title": "Third Example. Creating advices.",
+    "section": "Results",
+    "text": "Results\nNow, we can call the choice method, which will return a random object inside an Iterable (something that can be iterated).\n\nr = Random()\nr.choice([1, 5, 10])\n\ncatched!\n\n\n1\n\n\nWe can also produce an exception in this method:\n\nr.choice([])\n\ncatched!\nCannot choose from an empty sequence  was raised.\n\n\nIndexError: Cannot choose from an empty sequence\n\n\nchoice cannot take an empty Iterable. As you can see, we obtain the “catched!” message (before) and then we obtain the “e was raised” message.\nSince the exception is raised anyway, the messages are at the top of the cell output, which can be a little weird for us programmers."
+  },
+  {
+    "objectID": "example03.html#pointcuts-cannot-be-deactivated",
+    "href": "example03.html#pointcuts-cannot-be-deactivated",
+    "title": "Third Example. Creating advices.",
+    "section": "PointCut’s cannot be deactivated",
+    "text": "PointCut’s cannot be deactivated\nWe have noted this before: applying a PointCut is not a reversible action, as the method behaviour is dynamically modified.\nHowever, we can apply several PointCuts to the same “catched” method (even in the same moment, using distinct Aspects or in a sequential declaration).\nLet us define the following method. We could use a lambda expresion, but this is to notice that we can also use named functions.\n\ndef magnifying_glass(*args, **kwargs): # remember, we get as input the *a and the **k parameters\n    print(\"Input parameters: \",  args)\n\nNow, we can modify the before moment, adding this new method. Then, we create the PointCut.\n\ntest_aspect.set_before(magnifying_glass)\n\ntest_aspect.create_pointcut(get_classes(), \".*\\.Random\\.c.*\")\n\nCaptured method: random.Random.choice\nCaptured method: random.Random.choices\n\n\nWe have captured the same two methods. However, those methods had already been modified, so they have two new behaviours: - print “catched!”, and - print the input parameters.\nIt is important to note that, in Python, AOP is defined as a LIFO chain: the first defined Aspects are the last to be executed (because the new ones wrap the old ones).\n\nr.choice([1, 5, 10])\n\nInput parameters:  ([1, 5, 10],)\ncatched!\n\n\n5"
+  },
+  {
+    "objectID": "example03.html#conclusion",
+    "href": "example03.html#conclusion",
+    "title": "Third Example. Creating advices.",
+    "section": "Conclusion",
+    "text": "Conclusion\nDuring this example we have explained how to define the methods (or lambdas) used to define advices: they need the *a and the **k input parameters. Using the after_throwing moment, we will need the e parameter too (the raised exception). We have also noted something important: PointCuts cannot be deactivated and, if we define several of them, they will be applied in a LIFO chain.\nIn the next example we will see how to modify input parameters."
+  },
+  {
+    "objectID": "example05.html",
+    "href": "example05.html",
+    "title": "Fifth Example. Creating partial functions.",
+    "section": "",
+    "text": "Sometimes you need to change a function to accept less arguments: the original function can be several customizable, but you want to offer it with quite less parameters or to use it with quite less parameters.\nThe former should not be solved using AOP, because you have detected the necesity statically, but the latter can be an issue to be tackled. In fact, functools define a partial function to solve this situations.\nDuring this example, we will explain how to modify the original functions to have partial versions using the before PointCut."
+  },
+  {
+    "objectID": "example05.html#library-import",
+    "href": "example05.html#library-import",
+    "title": "Fifth Example. Creating partial functions.",
+    "section": "Library import",
+    "text": "Library import\nFirst of all, we need to import to the Aspects file the libraries and modules that will be used. In this case, random.\n\nfrom aspectify.aop import Aspect\nfrom random import Random\n\nAdditionally, we need to define the get_classes method.\n\ndef get_classes():\n    return [element for element in list(globals().items())]"
+  },
+  {
+    "objectID": "example05.html#advice-definition",
+    "href": "example05.html#advice-definition",
+    "title": "Fifth Example. Creating partial functions.",
+    "section": "advice definition",
+    "text": "advice definition\nIn this example, we will define an Aspect called partial_aspect, and we will modify it behaviour during the example.\n\npartial_aspect = Aspect()\n\nAs previously seen, we can add a before advice, just using the set_before method.\n\npartial_aspect.set_before(lambda *a, **k: [10, *a])\n\nIn this case, we change the input paramets: we fix the first argument to be 10 and let the others like in the original call.\nIt is important to note that we have added a new fixed argument to the call, so now we can call the function with only one parameter. In fact, if we call it with two of them, it will raise an error. It can be also solved by creating the new arguments with *a[:X], were X will be the number of dynamically set parameters.\nFinally, we catch the randint method from random.\n\npartial_aspect.create_pointcut(get_classes(), \"random.Random.randint\")\n\nCaptured method: random.Random.randint"
+  },
+  {
+    "objectID": "example05.html#results",
+    "href": "example05.html#results",
+    "title": "Fifth Example. Creating partial functions.",
+    "section": "Results",
+    "text": "Results\nNow, we can call the randint method, which will return a random number in [a,b]\n\nr = Random()\nr.randint(20)\n\nWARNING:root:Args changed from [&lt;random.Random object&gt;, 20] to [&lt;random.Random object&gt;, 10, 20]\n\n\n13"
+  },
+  {
+    "objectID": "example05.html#conclusion",
+    "href": "example05.html#conclusion",
+    "title": "Fifth Example. Creating partial functions.",
+    "section": "Conclusion",
+    "text": "Conclusion\nDuring this example we have explained how to use a before PointCut to build a partial function: a simplified function using another one. Those partial functions are not the same that partials from functools, since those functions override the original behaviour of the method: we will use the same name, but the change is not reversible."
+  },
+  {
+    "objectID": "example04.html",
+    "href": "example04.html",
+    "title": "Fourth Example. Dynamically input arguments modification.",
+    "section": "",
+    "text": "Sometimes you just need to get access to the input parameters of a function to show or to modify them. This level of customization must be carefully used, but AOP allow us to tackle it using a before PointCut.\nDuring this example, we will explain how to dynamically modify the input paramers of any function."
+  },
+  {
+    "objectID": "example04.html#library-import",
+    "href": "example04.html#library-import",
+    "title": "Fourth Example. Dynamically input arguments modification.",
+    "section": "Library import",
+    "text": "Library import\nFirst of all, we need to import to the Aspects file the libraries and modules that will be used. In this case, random.\n\nfrom aspectify.aop import Aspect\nfrom random import Random\n\nAdditionally, we need to define the get_classes method.\n\ndef get_classes():\n    return [element for element in list(globals().items())]"
+  },
+  {
+    "objectID": "example04.html#advice-definition-relu",
+    "href": "example04.html#advice-definition-relu",
+    "title": "Fourth Example. Dynamically input arguments modification.",
+    "section": "advice definition: RELU",
+    "text": "advice definition: RELU\nIn this example, we will define an Aspect called modified_aspect, and we will modify it behaviour during the example.\n\nmodified_aspect = Aspect()\n\nAs previously seen, we can add a before advice, just using the set_before method.\n\nmodified_aspect.set_before(lambda *a, **k: [max(0, a) for a in a])\n\nAs we can see, the used lambda has two input parameters, *a and **k, representing all the parameters that the original method can have.\n\nREMEMBER: We can access to the parameters used in the original call of the catched method.\n\nIn this case, we change the input paramets: we apply the RELU function (max(0, a)) for each secuential argument (inside *a). Thus, the original method will be called with positive or 0 integers.\nFinally, we catch the randint method from random.\n\nmodified_aspect.create_pointcut(get_classes(), \"random.Random.randint\")\n\nCaptured method: random.Random.randint"
+  },
+  {
+    "objectID": "example04.html#results",
+    "href": "example04.html#results",
+    "title": "Fourth Example. Dynamically input arguments modification.",
+    "section": "Results",
+    "text": "Results\nNow, we can call the randint method, which will return a random number in [a,b]\n\nr = Random()\nr.randint(-5, 7)\n\nWARNING:root:Args changed from [&lt;random.Random object&gt;, -5, 7] to [&lt;random.Random object&gt;, 0, 7]\n\n\n6"
+  },
+  {
+    "objectID": "example04.html#advice-definition-to-int",
+    "href": "example04.html#advice-definition-to-int",
+    "title": "Fourth Example. Dynamically input arguments modification.",
+    "section": "advice definition: TO INT",
+    "text": "advice definition: TO INT\nWe can also modify the parameters to set new preconditions.\nFor example, it is known that getrandbits waits for an int argument. We can stablish this precondition with a before PointCut if the original auther did not. In order to do that, we only know to take the input parameters and transform them into integers (or raise an exception if any of them is, for example, a float).\nFirst of all, let us see what happend when we call this method using a float argument.\n\nr = Random()\nr.getrandbits(8.15)\n\nTypeError: integer argument expected, got float\n\n\nLet us define the aspect and try the method with it.\n\nmodified_aspect = Aspect()\n\nmodified_aspect.set_before(lambda *a, **k: [int(a) for a in a])\n\nmodified_aspect.create_pointcut(get_classes(), \"random.Random.getrandbits\")\n\nCaptured method: random.Random.getrandbits"
+  },
+  {
+    "objectID": "example04.html#results-1",
+    "href": "example04.html#results-1",
+    "title": "Fourth Example. Dynamically input arguments modification.",
+    "section": "Results",
+    "text": "Results\n\nr = Random()\nr.getrandbits(8.15)\n\nWARNING:root:Args changed from [&lt;random.Random object&gt;, 8.15] to [&lt;random.Random object&gt;, 8]\n\n\n68"
+  },
+  {
+    "objectID": "example04.html#conclusion",
+    "href": "example04.html#conclusion",
+    "title": "Fourth Example. Dynamically input arguments modification.",
+    "section": "Conclusion",
+    "text": "Conclusion\nDuring this example we have explained how to use a before PointCut to modify the precondition of a method (how to adjust input parameters). This can be used in several situations. For example, we can stablish default parameters or partial functions using this.\nIn fact, we will show how to do that in the next example."
+  }
+]
