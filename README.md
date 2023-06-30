@@ -97,3 +97,5 @@ how to use it with a simple example.
   expressions.](https://ruescog.github.io/aspectify/example02.html)
 - [Example 3: Creating
   advices.](https://ruescog.github.io/aspectify/example03.html)
+- [Example 3: Dynamically input arguments
+  modification.](https://ruescog.github.io/aspectify/example04.html)
